@@ -1,0 +1,197 @@
+How to get all authors
+
+http://localhost:8080/authors
+
+should look like this
+
+[
+    {
+        "id": 2,
+        "name": "shawn ooooooooooo"
+    },
+    {
+        "id": 3,
+        "name": "RYAN BOODHOOO"
+    },
+    {
+        "id": 4,
+        "name": "shawn ooooooooooo"
+    }
+]
+
+How to get all books
+
+http://localhost:8080/api/books
+
+should look like this
+
+[
+    {
+        "id": 1,
+        "title": "to kill a bird",
+        "author": null
+    },
+    {
+        "id": 3,
+        "title": "slam dunk!!!!!!!!!!!!",
+        "author": {
+            "id": 2,
+            "name": "shawn ooooooooooo"
+        }
+    },
+    {
+        "id": 4,
+        "title": "green book",
+        "author": {
+            "id": 2,
+            "name": "shawn ooooooooooo"
+        }
+    },
+    {
+        "id": 5,
+        "title": "green book",
+        "author": {
+            "id": 2,
+            "name": "shawn ooooooooooo"
+        }
+    }
+]
+
+how to get all library
+
+http://localhost:8080/library
+
+should look like this
+
+[
+    {
+        "id": 1,
+        "name": "green book",
+        "books": [
+            {
+                "id": 4,
+                "title": "green book",
+                "author": {
+                    "id": 2,
+                    "name": "shawn ooooooooooo"
+                }
+            },
+            {
+                "id": 5,
+                "title": "green book",
+                "author": {
+                    "id": 2,
+                    "name": "shawn ooooooooooo"
+                }
+            }
+        ]
+    }
+]
+
+How to get an an author by id
+
+http://localhost:8080/authors/{authorId} for example 2
+
+should look like this
+
+{
+    "id": 2,
+    "name": "shawn ooooooooooo"
+}
+
+How to get an a book by id
+
+http://localhost:8080/api/books/books/1
+
+{
+    "id": 1,
+    "title": "to kill a bird",
+    "author": null
+}
+
+How to get a library by id
+
+http://localhost:8080/library/{libraryId} for example 1
+
+{
+    "id": 1,
+    "name": "green book",
+    "books": [
+        {
+            "id": 4,
+            "title": "green book",
+            "author": {
+                "id": 2,
+                "name": "shawn ooooooooooo"
+            }
+        },
+        {
+            "id": 5,
+            "title": "green book",
+            "author": {
+                "id": 2,
+                "name": "shawn ooooooooooo"
+            }
+        }
+    ]
+}
+
+How to DELETE an an author by id http://localhost:8080/author/1
+How to DELETE an a book by id - http://localhost:8080/api/books/book/1
+How to DELETE a library by id- http://localhost:8080/library/1
+
+How to create a library http://localhost:8080/library POST
+
+{
+"title" : "NameOfLibraryHere"
+}
+
+
+How to create an author POST
+
+{
+"name" : "NameOfTheAuthorHere"
+}
+
+How to create a Library POST
+
+{
+"name" : "NameOf the Library"
+}
+
+How to create a book ("http://localhost:8080/{libraryId}/{authorId}") POST
+
+      Id of the library "id":1
+      ID of the author  "id": 2,
+
+       then the body of postman must look something like this
+
+       {
+       "title" : "EnterBookNameHere"
+       }
+
+       then your output should be this
+       {
+           "id": 8,
+           "title": "kkkkkkkkkkkkkkkk",
+           "author": {
+               "id": 3,
+               "name": "RYAN BOODHOOO"
+           }
+       }
+
+How to edit a library - PUT  http://localhost:8080/library/{libraryId}
+
+How to edit a book - PUT http://localhost:8080/api/books/books/{bookID}
+
+How to edit a author -PUT http://localhost:8080/author/{authorID}
+
+How to find a book by title
+
+Get http://localhost:8080/api/books/search?title=slam dunk!!!!!!!!!!!
+
+Assigning book to library PUT http://localhost:8080/api/books/book/6/library/1
+
+
+
+
