@@ -21,4 +21,7 @@ public interface BooksRepo extends CrudRepository<Book, Long>{
 
     public List<Book> findByTitle(@Param("title")String title);
 
+    @Query("SELECT b FROM Book b WHERE b.id = :id")
+    Book findBookById(@Param("id") Long id);
+
 }

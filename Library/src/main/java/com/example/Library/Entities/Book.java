@@ -3,6 +3,8 @@ package com.example.Library.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Book{
 
@@ -11,6 +13,12 @@ public class Book{
     private Long id;
 
     private String title;
+
+    private String status; // "available" or "checked_out"
+
+    private Long borrowedBy; // User ID
+
+    private LocalDate dueDate;
 
     @ManyToOne
     @JoinColumn(name = "author_id")
@@ -21,7 +29,6 @@ public class Book{
     @JsonIgnore
     private Library library;
 
-    // ... other book properties and methods
 
 
     public Book() {
@@ -65,5 +72,29 @@ public class Book{
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Long getBorrowedBy() {
+        return borrowedBy;
+    }
+
+    public void setBorrowedBy(Long borrowedBy) {
+        this.borrowedBy = borrowedBy;
+    }
+
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 }
