@@ -136,9 +136,9 @@ http://localhost:8080/library/{libraryId} for example 1
     ]
 }
 
-How to DELETE an an author by id http://localhost:8080/author/1
-How to DELETE an a book by id - http://localhost:8080/api/books/book/1
-How to DELETE a library by id- http://localhost:8080/library/1
+How to DELETE an an author by id http://localhost:8080/author/{AuthorsID}1
+How to DELETE an a book by id - http://localhost:8080/api/books/book/{BookID}1
+How to DELETE a library by id- http://localhost:8080/library/{LibraryID}1
 
 How to create a library http://localhost:8080/library POST
 
@@ -188,10 +188,19 @@ How to edit a author -PUT http://localhost:8080/author/{authorID}
 
 How to find a book by title
 
-Get http://localhost:8080/api/books/search?title=slam dunk!!!!!!!!!!!
+Get http://localhost:8080/search?title=book890
 
 Assigning book to library PUT http://localhost:8080/api/books/book/6/library/1
 
+ How to checkout a book Post -  http://localhost:8080/checkout/{libraryId}1/book/{bookId]3
+ {
+     "title" : "Book Name 1234" ,
+     "status": "available",
+     "borrowedBy" : 1,
+     "dueDate" : "12-31-2025"
 
+  }
 
+How to return the book  http://localhost:8080/return/user/1/book/3
 
+<200 OK OK,Book returned successfully,[]>

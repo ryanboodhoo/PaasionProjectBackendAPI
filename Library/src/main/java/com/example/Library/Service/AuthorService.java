@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-//
+
 @Service
 public class AuthorService {
     @Autowired
@@ -55,6 +55,7 @@ public class AuthorService {
             throw new ResourceNotFoundException("Author with id of " + id + " not found");
         }
 
-        public Iterable<Author>getAllAuthorsByBookTitle(String query){return authorRepo.findByAuthor(query);}
+        public Iterable<Author>findByAuthor(String author){return authorRepo.findByAuthor(author);}
 
     }
+

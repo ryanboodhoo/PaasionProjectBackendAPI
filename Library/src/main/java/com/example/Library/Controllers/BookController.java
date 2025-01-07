@@ -17,7 +17,6 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/books")
 public class BookController {
 
     private final Logger logger = LoggerFactory.getLogger(BookController.class);
@@ -25,13 +24,13 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping
+    @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks() {
          List<Book> books = bookService.getAllBooks();
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-    @PostMapping("/{libraryId}/{authorId}")
+    @PostMapping("/library/{libraryId}/authors/{authorId}")
     public ResponseEntity<Book> createBook(@RequestBody Book book, @PathVariable Long authorId ,@PathVariable Long libraryId) {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -70,11 +69,6 @@ public class BookController {
         return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
-//    @GetMapping("/findByTitle")
-//    public ResponseEntity<List<Book>> findByTitle(@RequestParam String title) {
-//        List<Book> books = bookService.findByTitle(title);
-//        return new ResponseEntity<>(books, HttpStatus.OK);
-//    }
 
     @PutMapping("/book/{bookId}/library/{libraryId}")
     public void bookAssignedToLibrary (@PathVariable Long bookId , @PathVariable Long libraryId){

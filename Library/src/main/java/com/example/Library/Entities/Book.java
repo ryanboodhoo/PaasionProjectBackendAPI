@@ -1,5 +1,6 @@
 package com.example.Library.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -17,7 +18,7 @@ public class Book{
     private String status; // "available" or "checked_out"
 
     private Long borrowedBy; // User ID
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
     private LocalDate dueDate;
 
     @ManyToOne

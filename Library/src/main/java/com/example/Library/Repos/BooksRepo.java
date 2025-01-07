@@ -11,8 +11,9 @@ import java.util.List;
 
 @Repository
 public interface BooksRepo extends CrudRepository<Book, Long>{
-    @Query(value = "SELECT * FROM Book WHERE title LIKE CONCAT('%', :query, '%')", nativeQuery = true)
-    Iterable<Book> searchBooks(String query);
+//    @Query(value = "SELECT * FROM Book WHERE title LIKE CONCAT('%', :query, '%')", nativeQuery = true)
+    @Query("Select b from Book b where b.title like %:title%")
+    Iterable<Book> searchBooks(String title);
 
     @Query(value = "SELECT * FROM Author WHERE name LIKE CONCAT('%', :query, '%')", nativeQuery = true)
 

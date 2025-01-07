@@ -13,7 +13,7 @@ public class User {
     private String name;
 
     @ElementCollection
-    private List<Long> borrowedBooks; // List of book IDs
+    private List<String> borrowedBooks; // List of book IDs
 
     // Getters and Setters
 
@@ -33,11 +33,11 @@ public class User {
         this.name = name;
     }
 
-    public List<Long> getBorrowedBooks() {
+    public List<String> getBorrowedBooks() {
         return borrowedBooks;
     }
 
-    public void setBorrowedBooks(List<Long> borrowedBooks) {
+    public void setBorrowedBooks(List<String> borrowedBooks) {
         this.borrowedBooks = borrowedBooks;
     }
 }

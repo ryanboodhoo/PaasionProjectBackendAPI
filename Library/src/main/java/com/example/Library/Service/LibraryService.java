@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+ import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
+ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,62 +62,66 @@ public class LibraryService {
     }
 
     public String checkoutBook(Long userId, Long bookId) throws Exception {
-        // Fetch user
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
 
-        // Fetch book
-        Book book = booksRepo.findById(bookId).orElseThrow(() -> new Exception("Book not found"));
+        // Fetch user and book
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Book book = booksRepo.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        // Check if book is available
+        // Check if the book is available
         if (!"available".equals(book.getStatus())) {
-            throw new Exception("Book is already checked out");
+            throw new RuntimeException("Book is already checked out");
         }
 
-        // Check user borrowing limit
+        // Check user's borrowing limit
         if (user.getBorrowedBooks().size() >= 5) {
-            throw new Exception("Borrowing limit reached");
+            throw new RuntimeException("Borrowing limit reached");
         }
 
         // Update book status
         book.setStatus("checked_out");
-        book.setBorrowedBy(userId);
+        book.setBorrowedBy(user.getId()); // Use userId instead of name
         book.setDueDate(LocalDate.now().plusDays(14)); // 2 weeks from now
         booksRepo.save(book);
 
-        // Update user
-        user.getBorrowedBooks().add(bookId);
+        // Add the book to user's borrowed books list
+        user.getBorrowedBooks().add(String.valueOf(bookId));
         userRepository.save(user);
 
-        return "Book checked out successfully";
+        return "Book checked out successfully!";
     }
 
 
 
-    public String returnBook(Long userId, Long bookId) throws Exception {
-        // Fetch user
-        User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+    public ResponseEntity<String> returnBook(Long userId, Long bookId) {
+        try {
+            // Fetch user and book
+            User user = userRepository.findById(userId).orElseThrow(() -> new Exception("User not found"));
+            Book book = booksRepo.findById(bookId).orElseThrow(() -> new Exception("Book not found"));
 
-        // Fetch a book
-        Book book = booksRepo.findById(bookId).orElseThrow(() -> new Exception("Book not found"));
+            // Check if this user borrowed the book
+            String borrowedBy = String.valueOf(book.getBorrowedBy());
+            if (borrowedBy == null || !borrowedBy.equals(String.valueOf(userId))) {
+                return ResponseEntity.badRequest().body("Book is not currently borrowed by you.");
+            }
 
-        // Check if this user currently borrows the book
-        if (!book.getBorrowedBy().equals(userId)) {
-            throw new Exception("Book is not borrowed by this user");
+            // Remove a book from user's borrowed list
+            user.getBorrowedBooks().remove(bookId);
+
+            // Update book's status
+            book.setStatus("available");
+            book.setBorrowedBy(null);
+            book.setDueDate(null);
+
+            // Save changes using CrudRepository
+            userRepository.save(user);
+            booksRepo.save(book);
+
+            return ResponseEntity.ok("Book returned successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-        // Remove a book from user's borrowed list
-        user.getBorrowedBooks().remove(bookId);
-
-        // Update book's status
-        book.setStatus("available");
-        book.setBorrowedBy(null);
-        book.setDueDate(null);
-
-        // Save changes using CrudRepository
-        userRepository.save(user);
-        booksRepo.save(book);
-
-        return "Book returned successfully";
     }
 }
 

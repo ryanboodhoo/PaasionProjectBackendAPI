@@ -61,8 +61,8 @@ public class LibraryController {
         return libraryService.changeLibrary(library, id);
     }
 
-    @PostMapping("/checkout")
-    public ResponseEntity<String> checkoutBook(@RequestParam Long userId, @RequestParam Long bookId) {
+    @PostMapping("/checkout/{userId}/book/{bookId}")
+    public ResponseEntity<String> checkoutBook(@PathVariable Long userId, @PathVariable Long bookId) {
         try {
             String message = libraryService.checkoutBook(userId, bookId);
             return ResponseEntity.ok(message);
@@ -71,10 +71,10 @@ public class LibraryController {
         }
     }
 
-    @PostMapping("/return")
-    public ResponseEntity<String> returnBook(@RequestParam Long userId, @RequestParam Long bookId) {
+    @PostMapping("/return/user/{userId}/book/{bookId}")
+    public ResponseEntity<String> returnBook(@PathVariable Long userId, @PathVariable Long bookId) {
         try {
-            String message = libraryService.returnBook(userId, bookId);
+            String message = String.valueOf(libraryService.returnBook(userId, bookId));
             return ResponseEntity.ok(message);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

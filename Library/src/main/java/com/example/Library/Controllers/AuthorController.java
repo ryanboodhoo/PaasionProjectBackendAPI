@@ -22,14 +22,14 @@ import java.util.List;
 
     private final Logger logger = LoggerFactory.getLogger(AuthorController.class);
 
-     @GetMapping("/authors")
+     @GetMapping("/author")
     public ResponseEntity<List<Author>> getAllAuthors() {
          logger.info("Getting authors " );
          List<Author> authors = authorService.getAllAuthor();
           return new ResponseEntity<>(authors, HttpStatus.OK);
     }
 
-    @PostMapping("/authors")
+    @PostMapping("/author")
     public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -41,30 +41,27 @@ import java.util.List;
         return new ResponseEntity<>(author, HttpStatus.CREATED);
     }
 
-    @GetMapping("/authors/{id}")
+    @GetMapping("/author/{id}")
     public ResponseEntity<Author> getAuthorById(@PathVariable Long id){
         logger.info("Finding an author with an id of " + id);
         return new ResponseEntity<>(authorService.getAnAuthorById(id),HttpStatus.OK);
     }
 
-    @PutMapping("/authors/{id}")
+    @PutMapping("/author/{id}")
     public ResponseEntity<?> updateAuthor(@PathVariable Long id, @RequestBody Author author) throws ResourceNotFoundException {
         logger.info("Updating a author with an id of " + author.getId());
         return  authorService.changeAuthor(author, id);
     }
 
-    @DeleteMapping("/authors/{id}")
+    @DeleteMapping("/author/{id}")
     public ResponseEntity<HttpStatus> deleteAuthor(@PathVariable Long id) {
          authorService.deleteAuthor(id);
          logger.info("Deleted a author with an id of " + id);
          return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-//    @GetMapping("/authors/search")
-//    public ResponseEntity<List<Author>> searchAuthorsByBookTitle(@RequestParam String query) {
-//        List<Author> authors = (List<Author>) authorService.getAllAuthorsByBookTitle(query);
-//        return new ResponseEntity<>(authors, HttpStatus.OK);
-//    }
-
-
+       @GetMapping("/findByAuthor")
+    public ResponseEntity<List<Author>> findByAuthor(@RequestParam String author) {
+        List<Author> authors = (List<Author>) authorService.findByAuthor(author);
+        return new ResponseEntity<>(authors, HttpStatus.OK);
+    }
 }

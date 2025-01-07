@@ -27,8 +27,6 @@ public class BookService {
     @Autowired
     BooksRepo booksRepo;
 
-    @Autowired
-    AuthorRepo authorRepo;
 
     @Autowired
     AuthorService authorService;
