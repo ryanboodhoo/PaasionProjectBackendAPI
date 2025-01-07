@@ -1,3 +1,35 @@
+How to create a Library POST
+
+{
+"name" : "NameOf the Library"
+}
+How to create an author POST
+
+{
+"name" : "NameOfTheAuthorHere"
+}
+
+How to create a book ("http://localhost:8080/{libraryId}/{authorId}") POST
+
+      Id of the library "id":1
+      ID of the author  "id": 2,
+
+       then the body of postman must look something like this
+
+       {
+       "title" : "EnterBookNameHere"
+       }
+
+       then your output should be this
+       {
+           "id": 8,
+           "title": "kkkkkkkkkkkkkkkk",
+           "author": {
+               "id": 3,
+               "name": "RYAN BOODHOOO"
+           }
+       }
+
 How to get all authors
 
 http://localhost:8080/authors
@@ -21,7 +53,7 @@ should look like this
 
 How to get all books
 
-http://localhost:8080/api/books
+http://localhost:8080/books
 
 should look like this
 
@@ -101,7 +133,7 @@ should look like this
 
 How to get an a book by id
 
-http://localhost:8080/api/books/books/1
+http://localhost:8080/books/1
 
 {
     "id": 1,
@@ -136,61 +168,21 @@ http://localhost:8080/library/{libraryId} for example 1
     ]
 }
 
-How to DELETE an an author by id http://localhost:8080/author/{AuthorsID}1
-How to DELETE an a book by id - http://localhost:8080/api/books/book/{BookID}1
 How to DELETE a library by id- http://localhost:8080/library/{LibraryID}1
-
-How to create a library http://localhost:8080/library POST
-
-{
-"title" : "NameOfLibraryHere"
-}
-
-
-How to create an author POST
-
-{
-"name" : "NameOfTheAuthorHere"
-}
-
-How to create a Library POST
-
-{
-"name" : "NameOf the Library"
-}
-
-How to create a book ("http://localhost:8080/{libraryId}/{authorId}") POST
-
-      Id of the library "id":1
-      ID of the author  "id": 2,
-
-       then the body of postman must look something like this
-
-       {
-       "title" : "EnterBookNameHere"
-       }
-
-       then your output should be this
-       {
-           "id": 8,
-           "title": "kkkkkkkkkkkkkkkk",
-           "author": {
-               "id": 3,
-               "name": "RYAN BOODHOOO"
-           }
-       }
+How to DELETE an an author by id http://localhost:8080/author/{AuthorsID}1
+How to DELETE an a book by id - http://localhost:8080/book/{BookID}1
 
 How to edit a library - PUT  http://localhost:8080/library/{libraryId}
 
-How to edit a book - PUT http://localhost:8080/api/books/books/{bookID}
+How to edit a book - PUT http://localhost:8080/books/{bookID}
 
 How to edit a author -PUT http://localhost:8080/author/{authorID}
 
 How to find a book by title
 
-Get http://localhost:8080/search?title=book890
+Get http://localhost:8080/search?title=book890 (this is NOT case sensitive)
 
-Assigning book to library PUT http://localhost:8080/api/books/book/6/library/1
+Assigning book to library PUT http://localhost:8080/book/6/library/1
 
  How to checkout a book Post -  http://localhost:8080/checkout/{libraryId}1/book/{bookId]3
  {
@@ -200,6 +192,7 @@ Assigning book to library PUT http://localhost:8080/api/books/book/6/library/1
      "dueDate" : "12-31-2025"
 
   }
+Book checked out successfully!
 
 How to return the book  http://localhost:8080/return/user/1/book/3
 
